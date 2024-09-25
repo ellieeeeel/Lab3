@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 4</title>
+    <script src="randominteger.js"></script>
+</head>
+<body>
+    <h1>Number Guessing Game</h1>
+    <p>Guess a number between 1 and 100:</p>
+    <input type="text" id="guessInput">
+    <button onclick="guessNumber()">Submit Guess</button>
+    <p id="result"></p>
+    <p id="previousGuesses"></p>
+    <button onclick="startGame()">Start New Game</button>
+
+    <script>
+        let randomNumber;
+        let turns;
+        let guessedNumbers;
+
+        function startGame() {
+            randomNumber = randomInt();
+            turns = 10;
+            guessedNumbers = [];
+            document.getElementById('result').textContent = '';
+            document.getElementById('previousGuesses').textContent = 'Previous guesses: ';
+            document.getElementById('guessInput').value = '';
+        }
+
+        function guessNumber() {
+            let userGuess = Number(document.getElementById('guessInput').value);
+            guessedNumbers.push(userGuess);
+            turns--;
+
+            if (userGuess === randomNumber) {
+                document.getElementById('result').textContent = 'Congratulations! You guessed it right!';
+            } else if (turns === 0) {
+                document.getElementById('result').textContent = 'Game over! The number was ' + randomNumber;
+            } else {
+                let feedback = userGuess < randomNumber ? 'too low' : 'too high';
+                document.getElementById('result').textContent = 'Wrong guess! Your guess is ' + feedback + '.';
+                document.getElementById('previousGuesses').textContent = 'Previous guesses: ' + guessedNumbers.join(', ');
+            }
+        }
+
+        // Start the game on page load
+        startGame();
+    </script>
+</body>
+</html>
